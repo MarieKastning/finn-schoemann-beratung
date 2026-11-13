@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Walk&amp;Talk Varianten</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  @font-face { font-family: "Literata"; font-style: normal; font-weight: 300 600; font-display: swap; src: url(fonts/literata-latin.woff2) format("woff2"); }
+  @font-face { font-family: "Figtree"; font-style: normal; font-weight: 400 600; font-display: swap; src: url(fonts/figtree-latin.woff2) format("woff2"); }
+  :root { --nebel: #EDF0EA; --papier: #F8FAF6; --tanne: #1E3B34; --moos: #4F6B4A; --linie: #C9D3C4; --lichtung: #DCE7A9; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--nebel); color: var(--tanne); font-family: "Literata", Georgia, serif; line-height: 1.6; }
+  .wrap { max-width: 60rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+  h1 { font-weight: 400; font-size: clamp(1.7rem, 4vw, 2.3rem); margin: 0 0 .4rem; }
+  .intro { font-family: "Figtree", system-ui, sans-serif; color: var(--moos); margin: 0 0 2.5rem; max-width: 40rem; }
+  .intro a { color: var(--tanne); }
+  section { margin-bottom: 2.8rem; }
+  h2 { font-size: 1.3rem; font-weight: 500; margin: 0 0 .3rem; }
+  .idea { margin: 0 0 1rem; max-width: 44rem; font-size: .98rem; }
+  .stage { background: var(--tanne); border-radius: 6px; overflow: hidden; }
+  .stage svg { display: block; width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Walk&amp;Talk: Varianten zum Vergleich</h1>
+  <p class="intro">Arbeitsseite, nicht Teil der Website. Variante A ist die aktuelle Version auf der <a href="index.html#wald">Startseite</a>. Alle Animationen stehen still, wenn im Gerät „Bewegung reduzieren“ eingestellt ist.</p>
+
+  <section>
+    <h2>A. Aktuell: Punkte auf dem Waldweg</h2>
+    <p class="idea">Linien-Tannen, gepunkteter Weg, zwei Punkte als Spaziergänger. Abstrakt und ruhig, aber die Punkte lesen sich nicht sofort als Menschen.</p>
+    <div class="stage"><svg id="v1" viewBox="0 0 800 230" aria-hidden="true"></svg></div>
+  </section>
+
+  <section>
+    <h2>B. Fußspuren auf der Wanderkarte</h2>
+    <p class="idea">Draufsicht wie auf einer Wanderkarte, passend zu den Höhenlinien oben auf der Seite. Zwei Spuren aus Fußabdrücken entstehen nebeneinander und verblassen wieder. Man sieht das Gehen, ohne Figuren zeichnen zu müssen.</p>
+    <div class="stage"><svg id="v2" viewBox="0 0 800 260" aria-hidden="true"></svg></div>
+  </section>
+
+  <section>
+    <h2>C. Zwei Linien im Gespräch</h2>
+    <p class="idea">Zwei Linien laufen gemeinsam durch die Landschaft, mal nah beieinander, mal mit Abstand, und kreuzen sich. Steht für zwei Menschen und ihr Gespräch. Am poetischsten und reduziertesten.</p>
+    <div class="stage"><svg id="v3" viewBox="0 0 800 260" aria-hidden="true"></svg></div>
+  </section>
+
+  <section>
+    <h2>D. Spaziergang mit Tiefe</h2>
+    <p class="idea">Seitenansicht: Zwei einfache Figuren gehen, der Wald zieht in zwei Ebenen langsam vorbei. Ab und zu deuten kleine Bögen an, wer gerade spricht. Am lebendigsten und sofort verständlich.</p>
+    <div class="stage"><svg id="v4" viewBox="0 0 800 260" aria-hidden="true"></svg></div>
+  </section>
+
+  <section>
+    <h2>E. Gemeinsam in den Wald hinein</h2>
+    <p class="idea">Blick einen Waldweg entlang Richtung Licht. Zwei Figuren von hinten gehen langsam in die Tiefe. Wirkt einladend: „Hier könnten Sie gehen.“</p>
+    <div class="stage"><svg id="v5" viewBox="0 0 800 260" aria-hidden="true"></svg></div>
+  </section>
+</div>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+function seeded(seed) { let s = seed; return () => (s = (s * 9301 + 49297) % 233280) / 233280; }
+function loop(fn, still = 4000) {
+  if (reduce) { fn(still); return; }
+  const t0 = performance.now();
+  (function f(ts) { fn(ts - t0); requestAnimationFrame(f); })(t0);
+}
+const C = { papier: '#F8FAF6', lichtung: '#DCE7A9', tanne: '#1E3B34' };
+
+/* ---------- A: aktuell ---------- */
+(function () {
+  const svg = document.getElementById('v1');
+  ['M0 96 C120 70 210 88 320 66 S520 52 640 74 S760 70 800 62', 'M0 112 C140 94 260 108 380 90 S600 84 800 96']
+    .forEach(d => el('path', { d, fill: 'none', stroke: C.lichtung, 'stroke-width': 1, opacity: .22 }, svg));
+  function tree(x, base, h, op) {
+    let d = `M${x} ${base} L${x} ${base - h}`;
+    const tiers = Math.max(3, Math.round(h / 14));
+    for (let i = 0; i < tiers; i++) {
+      const y = base - h + 6 + i * (h * 0.78 / tiers), w = 4 + (i + 1) * (h * 0.32 / tiers);
+      d += ` M${x - w} ${y + w * .75} L${x} ${y} L${x + w} ${y + w * .75}`;
+    }
+    el('path', { d, fill: 'none', stroke: C.papier, 'stroke-width': 1.3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: op }, svg);
+  }
+  const rnd = seeded(7);
+  for (let x = 18; x < 800; x += 34 + rnd() * 26) tree(x, 128 + rnd() * 8, 34 + rnd() * 22, .28);
+  [[60, 228, 92], [138, 222, 70], [610, 226, 84], [700, 230, 104], [770, 218, 66], [330, 214, 52]].forEach(([x, b, h]) => tree(x, b, h, .55));
+  const trail = el('path', { d: 'M-10 226 C90 214 150 190 230 178 S380 176 430 160 S520 130 600 136 S720 142 810 128', fill: 'none', stroke: C.lichtung, 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-dasharray': '.1 8', opacity: .85 }, svg);
+  const a = el('circle', { r: 5, fill: C.lichtung }, svg), b = el('circle', { r: 5, fill: C.papier }, svg);
+  const len = trail.getTotalLength();
+  loop(ms => {
+    const t = 0.06 + ((ms % 48000) / 48000) * 0.88;
+    const p = trail.getPointAtLength(t * len), q = trail.getPointAtLength(Math.min(len, t * len + 1));
+    const nx = -(q.y - p.y), ny = q.x - p.x, n = Math.hypot(nx, ny) || 1;
+    a.setAttribute('cx', p.x + nx / n * 6.5); a.setAttribute('cy', p.y + ny / n * 6.5 - 4);
+    b.setAttribute('cx', p.x - nx / n * 6.5); b.setAttribute('cy', p.y - ny / n * 6.5 - 4);
+  }, 26000);
+})();
+
+/* ---------- B: Fußspuren auf der Wanderkarte ---------- */
+(function () {
+  const svg = document.getElementById('v2');
+  // Höhenlinien zweier Hügel
+  function rings(cx, cy, count, step, seed, sy) {
+    for (let k = 0; k < count; k++) {
+      let d = '';
+      for (let i = 0; i <= 120; i++) {
+        const t = i / 120 * Math.PI * 2;
+        const r = 14 + k * step + Math.sin(3 * t + seed + k * .15) * (3 + k * .8) + Math.sin(5 * t + seed * 2) * (2 + k * .4);
+        d += (i ? 'L' : 'M') + (cx + Math.cos(t) * r * 1.5).toFixed(1) + ' ' + (cy + Math.sin(t) * r * sy).toFixed(1);
+      }
+      el('path', { d: d + 'Z', fill: 'none', stroke: C.lichtung, 'stroke-width': 1, opacity: .13 }, svg);
+    }
+  }
+  rings(170, 70, 9, 15, .4, .8); rings(650, 205, 10, 15, 2.1, .75);
+  const path = el('path', { d: 'M-20 215 C110 205 170 140 290 140 S460 210 560 165 S700 70 830 85', fill: 'none', stroke: C.lichtung, 'stroke-width': 30, 'stroke-linecap': 'round', opacity: .06 }, svg);
+  const len = path.getTotalLength(), N = 64, steps = [];
+  for (let i = 0; i < N; i++) {
+    const L = (0.03 + i / N * 0.94) * len;
+    const p = path.getPointAtLength(L), q = path.getPointAtLength(L + 1);
+    const ang = Math.atan2(q.y - p.y, q.x - p.x), nx = -Math.sin(ang), ny = Math.cos(ang);
+    const lat = i % 2 ? 3.2 : -3.2;
+    const mk = (side, fill) => {
+      const x = p.x + nx * (side + lat), y = p.y + ny * (side + lat);
+      return el('ellipse', { cx: x, cy: y, rx: 4.4, ry: 2.4, fill, opacity: 0, transform: `rotate(${ang * 180 / Math.PI} ${x} ${y})` }, svg);
+    };
+    steps.push([mk(10, C.lichtung), mk(-10, C.papier)]);
+  }
+  loop(ms => {
+    const head = Math.floor(ms / 360) % (N + 24);
+    steps.forEach((pair, i) => {
+      const age = head - i, o = age >= 0 && age < 18 ? (1 - age / 18) * .95 : 0;
+      pair.forEach(e => e.setAttribute('opacity', o.toFixed(2)));
+    });
+  }, 360 * 40);
+})();
+
+/* ---------- C: Zwei Linien im Gespräch ---------- */
+(function () {
+  const svg = document.getElementById('v3');
+  el('path', { d: 'M0 92 C150 70 260 96 400 78 S650 62 800 84', fill: 'none', stroke: C.lichtung, 'stroke-width': 1, opacity: .18 }, svg);
+  el('path', { d: 'M0 108 C170 96 300 112 430 98 S660 92 800 104', fill: 'none', stroke: C.lichtung, 'stroke-width': 1, opacity: .12 }, svg);
+  const base = x => 200 - 55 * Math.sin(x / 800 * Math.PI * 1.15 + .15);
+  const gap = x => 15 * Math.sin(x / 165 + .7) + 3 * Math.sin(x / 47);
+  let d1 = '', d2 = '';
+  for (let x = -10; x <= 810; x += 4) {
+    d1 += (x === -10 ? 'M' : 'L') + x + ' ' + (base(x) + gap(x)).toFixed(1);
+    d2 += (x === -10 ? 'M' : 'L') + x + ' ' + (base(x) - gap(x)).toFixed(1);
+  }
+  const l1 = el('path', { d: d1, fill: 'none', stroke: C.lichtung, 'stroke-width': 2.2, 'stroke-linecap': 'round' }, svg);
+  const l2 = el('path', { d: d2, fill: 'none', stroke: C.papier, 'stroke-width': 2.2, 'stroke-linecap': 'round' }, svg);
+  const len1 = l1.getTotalLength(), len2 = l2.getTotalLength();
+  [[l1, len1], [l2, len2]].forEach(([l, n]) => l.setAttribute('stroke-dasharray', n));
+  const t1 = el('circle', { r: 4.5, fill: C.lichtung }, svg), t2 = el('circle', { r: 4.5, fill: C.papier }, svg);
+  const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  loop(ms => {
+    const cyc = 16000, t = ms % cyc;
+    const p = t < 11000 ? ease(t / 11000) : 1;
+    const op = t < 13500 ? 1 : 1 - (t - 13500) / 2500;
+    [[l1, len1, t1], [l2, len2, t2]].forEach(([l, n, dot]) => {
+      l.setAttribute('stroke-dashoffset', n * (1 - p));
+      l.setAttribute('opacity', op);
+      const pt = l.getPointAtLength(n * p);
+      dot.setAttribute('cx', pt.x); dot.setAttribute('cy', pt.y); dot.setAttribute('opacity', op);
+    });
+  }, 12000);
+})();
+
+/* ---------- D: Spaziergang mit Tiefe ---------- */
+(function () {
+  const svg = document.getElementById('v4');
+  function fir(g, x, base, h, fill) {
+    const w = h * .32;
+    let d = '';
+    for (let i = 0; i < 3; i++) {
+      const top = base - h + i * h * .24, bot = base - h * .28 + i * h * .12 - (2 - i) * h * .08;
+      const ww = w * (.55 + i * .28);
+      d += `M${x} ${top} L${x - ww} ${bot} L${x + ww} ${bot} Z `;
+    }
+    d += `M${x - 1.5} ${base - h * .2} h3 V${base} h-3 Z`;
+    el('path', { d, fill }, g);
+  }
+  const layers = [
+    { y: 175, h: [40, 70], gap: [26, 46], fill: 'rgba(220,231,169,.09)', speed: 7, seed: 3 },
+    { y: 200, h: [60, 100], gap: [40, 70], fill: 'rgba(220,231,169,.16)', speed: 16, seed: 11 },
+  ];
+  const groups = layers.map(L => {
+    const g = el('g', {}, svg), rnd = seeded(L.seed), xs = [];
+    for (let x = 10; x < 800; x += L.gap[0] + rnd() * (L.gap[1] - L.gap[0])) xs.push([x, L.h[0] + rnd() * (L.h[1] - L.h[0])]);
+    [0, 800].forEach(off => xs.forEach(([x, h]) => fir(g, x + off, L.y, h, L.fill)));
+    return [g, L.speed];
+  });
+  el('path', { d: 'M0 214 H800', stroke: C.lichtung, 'stroke-width': 1, opacity: .35 }, svg);
+  // Figuren
+  function figure(x, color, phase0) {
+    const g = el('g', {}, svg);
+    const st = { stroke: color, 'stroke-width': 2.6, 'stroke-linecap': 'round', fill: 'none' };
+    const legA = el('line', { x1: 0, y1: -22, x2: 0, y2: 0, ...st }, g), legB = el('line', { x1: 0, y1: -22, x2: 0, y2: 0, ...st }, g);
+    el('line', { x1: 0, y1: -46, x2: 0, y2: -22, ...st }, g);
+    const armA = el('line', { x1: 0, y1: -42, x2: 0, y2: -27, ...st }, g), armB = el('line', { x1: 0, y1: -42, x2: 0, y2: -27, ...st }, g);
+    el('circle', { cx: 1, cy: -54, r: 6.5, fill: color }, g);
+    const waves = el('g', { opacity: 0 }, g);
+    [10, 15].forEach(r => el('path', { d: `M${8 + r * .3} ${-54 - r * .55} A${r} ${r} 0 0 1 ${8 + r * .3} ${-54 + r * .55}`, ...st, 'stroke-width': 1.4 }, waves));
+    return { g, legA, legB, armA, armB, waves, x, phase0 };
+  }
+  const f1 = figure(368, C.papier, 0), f2 = figure(412, C.lichtung, Math.PI * .55);
+  [f1, f2].forEach(f => f.legB.parentNode.insertBefore(f.legB, f.legB.parentNode.firstChild));
+  loop(ms => {
+    groups.forEach(([g, sp]) => g.setAttribute('transform', `translate(${-((ms * sp / 1000) % 800)} 0)`));
+    [f1, f2].forEach((f, i) => {
+      const ph = ms / 1000 * Math.PI * 2 * .85 + f.phase0, a = Math.sin(ph) * 24;
+      const bob = -Math.abs(Math.cos(ph)) * 1.6;
+      f.g.setAttribute('transform', `translate(${f.x} ${214 + bob}) scale(1.4)`);
+      f.legA.setAttribute('transform', `rotate(${a} 0 -22)`); f.legB.setAttribute('transform', `rotate(${-a} 0 -22)`);
+      f.armA.setAttribute('transform', `rotate(${-a * .7} 0 -42)`); f.armB.setAttribute('transform', `rotate(${a * .7} 0 -42)`);
+      const talk = Math.floor(ms / 3500) % 2 === i ? 1 : 0, local = (ms % 3500) / 3500;
+      f.waves.setAttribute('opacity', (talk * Math.sin(local * Math.PI) * .8).toFixed(2));
+    });
+  }, 1200);
+})();
+
+/* ---------- E: Gemeinsam in den Wald hinein ---------- */
+(function () {
+  const svg = document.getElementById('v5');
+  const defs = el('defs', {}, svg);
+  const rg = el('radialGradient', { id: 'glow', cx: '50%', cy: '36%', r: '45%' }, defs);
+  el('stop', { offset: '0', 'stop-color': C.lichtung, 'stop-opacity': .32 }, rg);
+  el('stop', { offset: '1', 'stop-color': C.lichtung, 'stop-opacity': 0 }, rg);
+  el('rect', { x: 0, y: 0, width: 800, height: 260, fill: 'url(#glow)' }, svg);
+  const hz = 96;
+  el('path', { d: `M282 260 C330 190 380 140 397 ${hz} L403 ${hz} C420 140 470 190 518 260 Z`, fill: C.lichtung, opacity: .1 }, svg);
+  el('path', { d: `M282 260 C330 190 380 140 397 ${hz} M518 260 C470 190 420 140 403 ${hz}`, fill: 'none', stroke: C.lichtung, 'stroke-width': 1, opacity: .3 }, svg);
+  function fir(x, base, h, op) {
+    const w = h * .3;
+    let d = '';
+    for (let i = 0; i < 3; i++) {
+      const top = base - h + i * h * .24, bot = base - h * .3 + i * h * .1 - (2 - i) * h * .06;
+      const ww = w * (.55 + i * .3);
+      d += `M${x} ${top} L${x - ww} ${bot} L${x + ww} ${bot} Z `;
+    }
+    d += `M${x - h * .02} ${base - h * .25} h${h * .04} V${base} h${-h * .04} Z`;
+    el('path', { d, fill: C.lichtung, opacity: op }, svg);
+  }
+  const rnd = seeded(5), trees = [];
+  for (let k = 0; k < 11; k++) {
+    const dd = k / 10, base = hz + 4 + (262 - hz) * Math.pow(1 - dd, 1.7), h = 14 + 190 * Math.pow(1 - dd, 1.5);
+    const spread = 40 + 330 * Math.pow(1 - dd, 1.3);
+    trees.push([400 - spread - rnd() * 20, base, h, .1 + .2 * (1 - dd)], [400 + spread + rnd() * 20, base - rnd() * 4, h * (.9 + rnd() * .2), .1 + .2 * (1 - dd)]);
+  }
+  trees.sort((a, b) => a[1] - b[1]).forEach(t => fir(...t));
+  function person(color) {
+    const g = el('g', {}, svg);
+    el('path', { d: 'M-9 0 C-10 -14 -8 -24 0 -25 C8 -24 10 -14 9 0 Z', fill: color }, g);
+    el('circle', { cx: 0, cy: -31, r: 6.2, fill: color }, g);
+    return g;
+  }
+  const p1 = person(C.papier), p2 = person(C.lichtung);
+  loop(ms => {
+    const cyc = 18000, t = (ms % cyc) / cyc;
+    const s = .05 + t * .8;
+    const y = 250 - (250 - hz - 14) * (1 - Math.pow(1 - s, 1.6));
+    const sc = 1.25 * (1 - s * .86);
+    const op = t < .1 ? t / .1 : t > .85 ? (1 - t) / .15 : 1;
+    const bob = Math.sin(ms / 1000 * Math.PI * 2 * .9) * 1.2 * sc;
+    p1.setAttribute('transform', `translate(${400 - 11 * sc} ${y + bob}) scale(${sc})`);
+    p2.setAttribute('transform', `translate(${400 + 11 * sc} ${y - bob}) scale(${sc})`);
+    [p1, p2].forEach(p => p.setAttribute('opacity', op.toFixed(2)));
+  }, 5000);
+})();
+</script>
+</body>
+</html>
