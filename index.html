@@ -203,6 +203,40 @@
   .cards h5 { font-family: var(--sans); font-size: .95rem; font-weight: 600; margin: 0 0 .4rem; color: var(--lichtung); }
   .cards-note { font-size: .85rem; margin: .8rem 0 0; }
 
+  /* Wegweiser "Bin ich hier richtig?" */
+  .guide { background: var(--papier); }
+  .guide-link { font-family: var(--sans); font-size: .95rem; margin: 1.1rem 0 0; }
+  .guide-link a { text-underline-offset: .25em; text-decoration-color: var(--moos); }
+  .guide-steps { position: relative; max-width: 46rem; margin-top: 2.2rem; padding-left: 2.2rem; }
+  .guide-steps::before { content: ""; position: absolute; left: .45rem; top: .6rem; bottom: .6rem; border-left: 2px dotted var(--moos); opacity: .55; }
+  .step { position: relative; border: 0; padding: 0; margin: 0 0 2.2rem; min-width: 0; }
+  .step:last-child { margin-bottom: 0; }
+  .step > legend, .result-step { position: relative; }
+  .step > legend::before, .result-step::before { content: ""; position: absolute; left: -2.2rem; top: .3rem; width: 1.1rem; height: 1.1rem; border-radius: 50%; background: var(--papier); border: 2px solid var(--moos); box-sizing: border-box; }
+  .step.done > legend::before { background: var(--moos); }
+  .result-step::before { top: 1.6rem; background: var(--lichtung); border-color: var(--tanne); }
+  .step legend { font-size: 1.2rem; font-weight: 500; line-height: 1.35; padding: 0; margin-bottom: .9rem; }
+  .opts { display: flex; flex-direction: column; gap: .6rem; }
+  .opts.row { flex-direction: row; flex-wrap: wrap; }
+  .opt {
+    font: inherit; font-size: 1rem; line-height: 1.45; text-align: left; cursor: pointer;
+    background: var(--nebel); color: var(--tanne); border: 1px solid var(--linie); border-radius: 10px; padding: .85rem 1.1rem;
+  }
+  .opt:hover { border-color: var(--moos); }
+  .opt[aria-pressed="true"] { background: var(--tanne); color: var(--papier); border-color: var(--tanne); }
+  .result { background: var(--nebel); border-left: 3px solid var(--lichtung); padding: 1.4rem 1.5rem; }
+  .result.urgent { border-left-color: var(--rinde); }
+  .result h3 { margin-bottom: .6rem; }
+  .result ul { padding-left: 1.2rem; margin: 0 0 1rem; }
+  .result li { margin-bottom: .4rem; }
+  .result .btn { margin-top: .4rem; }
+  .result-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem 1.4rem; margin-top: 1rem; }
+  .linkbtn { font-family: var(--sans); font-size: .92rem; background: none; border: 0; padding: 0; color: var(--tanne); text-decoration: underline; text-underline-offset: .25em; cursor: pointer; }
+  .result-note { font-size: .88rem; font-style: italic; color: var(--moos); margin: 1rem 0 0; }
+  @media (prefers-reduced-motion: no-preference) {
+    .step.reveal { animation: reveal .3s ease-out; }
+  }
+
   .first-talk { font-family: var(--sans); font-weight: 600; display: inline-block; background: var(--papier); padding: .3rem .8rem; border-radius: 999px; margin-bottom: 1rem; }
   .crisis { margin-top: 2.8rem; padding: 1.2rem 1.4rem; background: var(--papier); border-left: 3px solid var(--rinde); max-width: 44rem; font-size: .97rem; }
   .crisis strong { display: block; margin-bottom: .2rem; }
@@ -296,6 +330,7 @@
             <a class="btn" href="#kontakt">Kostenfreies Erstgespräch anfragen</a>
             <span class="avail">Aktuell freie Plätze für Psychologische Beratung</span>
           </div>
+          <p class="guide-link"><a href="#wegweiser">Unsicher, ob Beratung das Richtige ist? Zum Wegweiser</a></p>
         </div>
         <div>
           <p class="topics-label">Zum Beispiel bei</p>
@@ -318,6 +353,36 @@
       </div>
 
       <p class="note">Hinweis: Meine Beratung ist keine Psychotherapie und ersetzt keine Behandlung psychischer Erkrankungen. Wenn eine psychische Erkrankung mit Krankheitswert vorliegt, ist eine psychotherapeutische Behandlung erforderlich.</p>
+    </div>
+  </section>
+
+  <section class="block guide" id="wegweiser">
+    <div class="wrap">
+      <h2>Bin ich hier richtig?</h2>
+      <p class="measure">Zwei kurze Fragen helfen Ihnen einzuordnen, ob psychologische Beratung zu Ihrer Situation passt. Ihre Antworten werden nicht gespeichert oder übertragen.</p>
+
+      <div class="guide-steps">
+        <fieldset class="step" id="step1">
+          <legend>Was beschreibt Ihre Situation gerade am besten?</legend>
+          <div class="opts">
+            <button type="button" class="opt" data-q="1" data-a="krise" aria-pressed="false">Ich bin in einer akuten Krise und weiß gerade nicht weiter.</button>
+            <button type="button" class="opt" data-q="1" data-a="therapie" aria-pressed="false">Ich habe eine diagnostizierte psychische Erkrankung oder vermute eine (z. B. Depression, Angststörung).</button>
+            <button type="button" class="opt" data-q="1" data-a="beratung" aria-pressed="false">Mich belastet eine schwierige Lebenssituation, etwa ein Konflikt, ein Verlust, Erschöpfung oder eine berufliche Frage.</button>
+            <button type="button" class="opt" data-q="1" data-a="selbst" aria-pressed="false">Mir geht es grundsätzlich gut, ich möchte mich aber besser verstehen und weiterentwickeln.</button>
+          </div>
+        </fieldset>
+
+        <fieldset class="step" id="step2" hidden>
+          <legend>Wo fällt Ihnen das Sprechen leichter?</legend>
+          <div class="opts row">
+            <button type="button" class="opt" data-q="2" data-a="raum" aria-pressed="false">In Ruhe im Sitzen</button>
+            <button type="button" class="opt" data-q="2" data-a="draussen" aria-pressed="false">Beim Gehen draußen</button>
+            <button type="button" class="opt" data-q="2" data-a="offen" aria-pressed="false">Weiß ich noch nicht</button>
+          </div>
+        </fieldset>
+
+        <div class="step result-step" id="guide-result" aria-live="polite" hidden></div>
+      </div>
     </div>
   </section>
 
@@ -438,7 +503,7 @@
       </details>
       <details class="faq">
         <summary>Wie finde ich einen Therapieplatz?</summary>
-        <p><mark class="todo">Antwort ergänzen, z. B. Hinweis auf die Terminservicestelle der Kassenärztlichen Vereinigung unter 116 117 und das Psychotherapeutenverzeichnis.</mark></p>
+        <p>Über die Terminservicestelle der Kassenärztlichen Vereinigung erhalten Sie telefonisch unter <a href="tel:116117">116 117</a> oder online unter <a href="https://www.eterminservice.de" rel="noopener">eterminservice.de</a> einen Termin für eine psychotherapeutische Sprechstunde. Dort wird geklärt, ob eine Behandlung sinnvoll ist. Zusätzlich können Sie Praxen in Ihrer Nähe direkt anfragen, eine Suche finden Sie unter <a href="https://www.116117.de" rel="noopener">116117.de</a>. Während der Wartezeit kann Beratung stabilisieren und Orientierung geben. <mark class="todo">Entwurf, von Finn zu prüfen.</mark></p>
       </details>
       <details class="faq">
         <summary>Wie läuft eine Sitzung ab und wie lange dauert sie?</summary>
@@ -543,6 +608,80 @@
       }
     }
   }
+  // Wegweiser "Bin ich hier richtig?" (nichts wird gespeichert oder gesendet)
+  (function guide() {
+    const step2 = document.getElementById('step2');
+    const out = document.getElementById('guide-result');
+    if (!step2 || !out) return;
+    const cta = '<a class="btn" href="#kontakt">Kostenfreies Erstgespräch anfragen</a>';
+    const reset = '<button type="button" class="linkbtn" data-reset>Noch einmal von vorn</button>';
+    const note = '<p class="result-note">Der Wegweiser ersetzt keine Diagnose. Im Zweifel klären wir im Erstgespräch gemeinsam, was zu Ihnen passt.</p>';
+    const R = {
+      krise: { urgent: true, html: `
+        <h3>Bitte holen Sie sich jetzt sofort Hilfe</h3>
+        <p>In einer akuten Krise ist ein Beratungstermin nicht der richtige erste Schritt. Sie müssen da nicht allein durch:</p>
+        <ul>
+          <li>TelefonSeelsorge, rund um die Uhr und kostenfrei: <a href="tel:08001110111">0800 111 0 111</a> oder <a href="tel:08001110222">0800 111 0 222</a></li>
+          <li>Ärztlicher Bereitschaftsdienst: <a href="tel:116117">116 117</a></li>
+          <li>Bei Gefahr für Leib und Leben: <a href="tel:112">Notruf 112</a></li>
+        </ul>
+        <p>Wenn es Ihnen wieder etwas besser geht, können Sie sich gern bei mir melden.</p>
+        <div class="result-actions">${reset}</div>` },
+      therapie: { html: `
+        <h3>Eine Psychotherapie ist vermutlich der passende Weg</h3>
+        <p>Bei einer psychischen Erkrankung mit Krankheitswert ist eine psychotherapeutische Behandlung erforderlich. Meine Beratung ersetzt sie nicht. So kommen Sie an einen Therapieplatz:</p>
+        <ul>
+          <li>Die Terminservicestelle vermittelt unter <a href="tel:116117">116 117</a> oder auf <a href="https://www.eterminservice.de" rel="noopener">eterminservice.de</a> einen Termin für eine psychotherapeutische Sprechstunde.</li>
+          <li>Zusätzlich können Sie Praxen in Ihrer Nähe direkt anfragen, zum Beispiel über die Suche auf <a href="https://www.116117.de" rel="noopener">116117.de</a>.</li>
+        </ul>
+        <p>Für die Wartezeit kann Beratung stabilisieren und Orientierung geben, bis ein Therapieplatz gefunden ist.</p>
+        <div class="result-actions">${cta}${reset}</div>${note}` },
+    };
+    const offer = {
+      beratung: ['Psychodynamische Beratung passt gut zu Ihrer Situation', 'Gemeinsam sortieren wir, was gerade schwierig ist, und schauen auf Ihre Gefühle, Bedürfnisse und wiederkehrenden Muster.', '#beratung', 'Mehr zur Psychodynamischen Beratung'],
+      selbst: ['Persönlichkeitsentwicklung & Selbsterfahrung passt gut zu Ihnen', 'Ein geschützter Raum, um sich besser zu verstehen und bewusster neue Wege zu gehen, auch ohne Krise.', '#selbsterfahrung', 'Mehr zur Selbsterfahrung'],
+    };
+    const place = {
+      raum: '',
+      draussen: '<p>Und weil Ihnen das Sprechen im Gehen leichter fällt: Das ist auch beim <a href="#wald">Bewegen und Sprechen im Wald (Walk&amp;Talk)</a> möglich.</p>',
+      offen: '<p>Ob im Sitzen oder beim <a href="#wald">Gehen im Wald</a>, das können wir im Erstgespräch gemeinsam herausfinden.</p>',
+    };
+    let a1 = null;
+
+    function press(q, a) {
+      document.querySelectorAll(`.opt[data-q="${q}"]`).forEach(b => b.setAttribute('aria-pressed', b.dataset.a === a ? 'true' : 'false'));
+      document.getElementById('step' + q).classList.add('done');
+    }
+    function show(el) { el.hidden = false; el.classList.remove('reveal'); void el.offsetWidth; el.classList.add('reveal'); el.scrollIntoView({ block: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
+    function render(html, urgent) { out.innerHTML = `<div class="result${urgent ? ' urgent' : ''}">${html}</div>`; show(out); }
+    function clearFrom(q) {
+      if (q <= 2) { step2.hidden = true; step2.classList.remove('done'); document.querySelectorAll('.opt[data-q="2"]').forEach(b => b.setAttribute('aria-pressed', 'false')); }
+      out.hidden = true; out.innerHTML = '';
+    }
+
+    document.getElementById('wegweiser').addEventListener('click', e => {
+      if (e.target.closest('[data-reset]')) {
+        a1 = null; clearFrom(2);
+        document.querySelectorAll('.opt[data-q="1"]').forEach(b => b.setAttribute('aria-pressed', 'false'));
+        document.getElementById('step1').classList.remove('done');
+        document.querySelector('.opt[data-q="1"]').focus();
+        return;
+      }
+      const b = e.target.closest('.opt');
+      if (!b) return;
+      const q = +b.dataset.q, a = b.dataset.a;
+      press(q, a);
+      if (q === 1) {
+        a1 = a; clearFrom(2);
+        if (R[a]) render(R[a].html, R[a].urgent);
+        else show(step2);
+      } else if (a1 && offer[a1]) {
+        const [title, text, href, more] = offer[a1];
+        render(`<h3>${title}</h3><p>${text} <a href="${href}">${more}</a></p>${place[a]}<div class="result-actions">${cta}${reset}</div>${note}`);
+      }
+    });
+  })();
+
   // Walk&Talk: Waldweg mit Tannen, zwei Spaziergänger gehen nebeneinander
   (function drawTrail() {
     const svg = document.querySelector('svg.trail-svg');
