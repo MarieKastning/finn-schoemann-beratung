@@ -35,13 +35,13 @@
 
   <section>
     <h2>B. Fußspuren auf der Wanderkarte</h2>
-    <p class="idea">Draufsicht wie auf einer Wanderkarte, passend zu den Höhenlinien oben auf der Seite. Zwei Spuren aus Fußabdrücken entstehen nebeneinander und verblassen wieder. Man sieht das Gehen, ohne Figuren zeichnen zu müssen.</p>
+    <p class="idea">Draufsicht wie auf einer Wanderkarte, passend zu den Höhenlinien oben auf der Seite. Zwei Spuren aus Fußabdrücken entstehen nebeneinander und verblassen wieder, ringsum Waldsymbole wie auf einer echten Karte. Man sieht das Gehen, ohne Figuren zeichnen zu müssen.</p>
     <div class="stage"><svg id="v2" viewBox="0 0 800 260" aria-hidden="true"></svg></div>
   </section>
 
   <section>
     <h2>C. Zwei Linien im Gespräch</h2>
-    <p class="idea">Zwei Linien laufen gemeinsam durch die Landschaft, mal nah beieinander, mal mit Abstand, und kreuzen sich. Steht für zwei Menschen und ihr Gespräch. Am poetischsten und reduziertesten.</p>
+    <p class="idea">Zwei Linien laufen gemeinsam durch den Wald, mal nah beieinander, mal mit Abstand, und kreuzen sich. Steht für zwei Menschen und ihr Gespräch. Am poetischsten und reduziertesten.</p>
     <div class="stage"><svg id="v3" viewBox="0 0 800 260" aria-hidden="true"></svg></div>
   </section>
 
@@ -55,6 +55,24 @@
     <h2>E. Gemeinsam in den Wald hinein</h2>
     <p class="idea">Blick einen Waldweg entlang Richtung Licht. Zwei Figuren von hinten gehen langsam in die Tiefe. Wirkt einladend: „Hier könnten Sie gehen.“</p>
     <div class="stage"><svg id="v5" viewBox="0 0 800 260" aria-hidden="true"></svg></div>
+  </section>
+
+  <section>
+    <h2>F. Nebelwald im Morgenlicht</h2>
+    <p class="idea">Gestaffelte Tannenreihen, dazwischen ziehen langsam Nebelbänder, hinten geht die Sonne auf. Zwei Silhouetten gehen über einen Hügelkamm. Am stimmungsvollsten, eher Bild als Grafik.</p>
+    <div class="stage"><svg id="v6" viewBox="0 0 800 260" aria-hidden="true"></svg></div>
+  </section>
+
+  <section>
+    <h2>G. Bei jedem Wetter</h2>
+    <p class="idea">Zwei Figuren gehen durch die vier Jahreszeiten: Frühlingsregen, volles Sommergrün, fallendes Herbstlaub, Schnee. Erzählt nebenbei, dass Walk&amp;Talk das ganze Jahr stattfindet.</p>
+    <div class="stage"><svg id="v7" viewBox="0 0 800 260" aria-hidden="true"></svg></div>
+  </section>
+
+  <section>
+    <h2>H. Drohnenblick: unter den Baumkronen</h2>
+    <p class="idea">Von oben gesehen: Baumkronen als Ringe (wie die Jahresringe oben auf der Seite), darunter folgen zwei Menschen dem Weg und tauchen unter den Kronen hindurch. Ruhig, grafisch, eigenständig.</p>
+    <div class="stage"><svg id="v8" viewBox="0 0 800 260" aria-hidden="true"></svg></div>
   </section>
 </div>
 
@@ -117,6 +135,16 @@ const C = { papier: '#F8FAF6', lichtung: '#DCE7A9', tanne: '#1E3B34' };
   rings(170, 70, 9, 15, .4, .8); rings(650, 205, 10, 15, 2.1, .75);
   const path = el('path', { d: 'M-20 215 C110 205 170 140 290 140 S460 210 560 165 S700 70 830 85', fill: 'none', stroke: C.lichtung, 'stroke-width': 30, 'stroke-linecap': 'round', opacity: .06 }, svg);
   const len = path.getTotalLength(), N = 64, steps = [];
+  // Waldsymbole wie auf der Wanderkarte (Nadel- und Laubwald), nicht auf dem Weg
+  const samples = [];
+  for (let i = 0; i <= 80; i++) samples.push(path.getPointAtLength(i / 80 * len));
+  const rndB = seeded(19), forest = el('g', { fill: 'none', stroke: C.lichtung, 'stroke-width': 1.1, 'stroke-linecap': 'round', opacity: .4 }, svg);
+  for (let k = 0; k < 140; k++) {
+    const x = rndB() * 800, y = 8 + rndB() * 244;
+    if (samples.some(p => Math.hypot(p.x - x, p.y - y) < 30)) continue;
+    if (rndB() < .55) el('path', { d: `M${x - 4} ${y + 3} L${x} ${y - 4} L${x + 4} ${y + 3} M${x} ${y + 3} V${y + 6}` }, forest);
+    else el('circle', { cx: x, cy: y, r: 3.2 }, forest);
+  }
   for (let i = 0; i < N; i++) {
     const L = (0.03 + i / N * 0.94) * len;
     const p = path.getPointAtLength(L), q = path.getPointAtLength(L + 1);
@@ -142,6 +170,19 @@ const C = { papier: '#F8FAF6', lichtung: '#DCE7A9', tanne: '#1E3B34' };
   const svg = document.getElementById('v3');
   el('path', { d: 'M0 92 C150 70 260 96 400 78 S650 62 800 84', fill: 'none', stroke: C.lichtung, 'stroke-width': 1, opacity: .18 }, svg);
   el('path', { d: 'M0 108 C170 96 300 112 430 98 S660 92 800 104', fill: 'none', stroke: C.lichtung, 'stroke-width': 1, opacity: .12 }, svg);
+  // Baumreihe am Horizont und zwei große Tannen vorn
+  function lineFir(x, base, h, op, w0 = .32) {
+    let d = `M${x} ${base} L${x} ${base - h}`;
+    const tiers = Math.max(3, Math.round(h / 12));
+    for (let i = 0; i < tiers; i++) {
+      const y = base - h + 5 + i * (h * .8 / tiers), w = 3 + (i + 1) * (h * w0 / tiers);
+      d += ` M${x - w} ${y + w * .55} Q${x - w * .3} ${y + w * .1} ${x} ${y} Q${x + w * .3} ${y + w * .1} ${x + w} ${y + w * .55}`;
+    }
+    el('path', { d, fill: 'none', stroke: C.papier, 'stroke-width': 1.2, 'stroke-linecap': 'round', opacity: op }, svg);
+  }
+  const rndC = seeded(23);
+  for (let x = 10; x < 800; x += 22 + rndC() * 30) lineFir(x, 116 + rndC() * 6, 22 + rndC() * 20, .22);
+  lineFir(46, 262, 150, .4); lineFir(752, 262, 130, .4);
   const base = x => 200 - 55 * Math.sin(x / 800 * Math.PI * 1.15 + .15);
   const gap = x => 15 * Math.sin(x / 165 + .7) + 3 * Math.sin(x / 47);
   let d1 = '', d2 = '';
@@ -268,6 +309,150 @@ const C = { papier: '#F8FAF6', lichtung: '#DCE7A9', tanne: '#1E3B34' };
     p2.setAttribute('transform', `translate(${400 + 11 * sc} ${y - bob}) scale(${sc})`);
     [p1, p2].forEach(p => p.setAttribute('opacity', op.toFixed(2)));
   }, 5000);
+})();
+
+/* ---------- gemeinsame Helfer für F, G, H ---------- */
+function firFilled(parent, x, base, h, fill, op = 1) {
+  const w = h * .32;
+  let d = '';
+  for (let i = 0; i < 3; i++) {
+    const top = base - h + i * h * .24, bot = base - h * .28 + i * h * .12 - (2 - i) * h * .08, ww = w * (.55 + i * .28);
+    d += `M${x} ${top} L${x - ww} ${bot} L${x + ww} ${bot} Z `;
+  }
+  d += `M${x - h * .02} ${base - h * .22} h${h * .04} V${base} h${-h * .04} Z`;
+  return el('path', { d, fill, opacity: op }, parent);
+}
+function walker(parent, color) {
+  const g = el('g', {}, parent);
+  const st = { stroke: color, 'stroke-width': 2.6, 'stroke-linecap': 'round', fill: 'none' };
+  const legB = el('line', { x1: 0, y1: -22, x2: 0, y2: 0, ...st }, g), legA = el('line', { x1: 0, y1: -22, x2: 0, y2: 0, ...st }, g);
+  el('line', { x1: 0, y1: -46, x2: 0, y2: -22, ...st }, g);
+  const armA = el('line', { x1: 0, y1: -42, x2: 0, y2: -27, ...st }, g), armB = el('line', { x1: 0, y1: -42, x2: 0, y2: -27, ...st }, g);
+  el('circle', { cx: 1, cy: -54, r: 6.5, fill: color }, g);
+  return (ms, x, y, phase0, sc = 1) => {
+    const ph = ms / 1000 * Math.PI * 2 * .85 + phase0, a = Math.sin(ph) * 24, bob = -Math.abs(Math.cos(ph)) * 1.6;
+    g.setAttribute('transform', `translate(${x} ${y + bob}) scale(${sc})`);
+    legA.setAttribute('transform', `rotate(${a} 0 -22)`); legB.setAttribute('transform', `rotate(${-a} 0 -22)`);
+    armA.setAttribute('transform', `rotate(${-a * .7} 0 -42)`); armB.setAttribute('transform', `rotate(${a * .7} 0 -42)`);
+  };
+}
+
+/* ---------- F: Nebelwald im Morgenlicht ---------- */
+(function () {
+  const svg = document.getElementById('v6');
+  const defs = el('defs', {}, svg);
+  const f = el('filter', { id: 'fogblur', x: '-20%', y: '-200%', width: '140%', height: '500%' }, defs);
+  el('feGaussianBlur', { stdDeviation: 9 }, f);
+  const rg = el('radialGradient', { id: 'sunglow', cx: '70%', cy: '34%', r: '40%' }, defs);
+  el('stop', { offset: 0, 'stop-color': C.lichtung, 'stop-opacity': .35 }, rg);
+  el('stop', { offset: 1, 'stop-color': C.lichtung, 'stop-opacity': 0 }, rg);
+  el('rect', { width: 800, height: 260, fill: 'url(#sunglow)' }, svg);
+  el('circle', { cx: 560, cy: 88, r: 24, fill: C.lichtung, opacity: .4 }, svg);
+  const rnd = seeded(31), fogs = [];
+  const layer = (y, hmin, hmax, gap, op) => { for (let x = -10; x < 820; x += gap * (.6 + rnd() * .8)) firFilled(svg, x, y + rnd() * 6, hmin + rnd() * (hmax - hmin), C.lichtung, op); };
+  layer(150, 30, 55, 22, .1);
+  fogs.push(el('ellipse', { cx: 400, cy: 148, rx: 420, ry: 14, fill: C.papier, opacity: .14, filter: 'url(#fogblur)' }, svg));
+  layer(190, 50, 90, 32, .18);
+  fogs.push(el('ellipse', { cx: 300, cy: 192, rx: 360, ry: 16, fill: C.papier, opacity: .16, filter: 'url(#fogblur)' }, svg));
+  const ridge = 'M-10 228 C160 208 330 226 470 214 S700 206 810 216';
+  el('path', { d: ridge + ' L810 260 L-10 260 Z', fill: '#16302a' }, svg);
+  const ridgeP = el('path', { d: ridge, fill: 'none', stroke: C.lichtung, 'stroke-width': 1, opacity: .35 }, svg);
+  fogs.push(el('ellipse', { cx: 500, cy: 236, rx: 300, ry: 12, fill: C.papier, opacity: .1, filter: 'url(#fogblur)' }, svg));
+  const w1 = walker(svg, C.papier), w2 = walker(svg, C.lichtung);
+  const len = ridgeP.getTotalLength();
+  loop(ms => {
+    fogs.forEach((e, i) => e.setAttribute('transform', `translate(${Math.sin(ms / 9000 + i * 2) * 50} 0)`));
+    const t = .1 + ((ms % 40000) / 40000) * .8;
+    const p1 = ridgeP.getPointAtLength(t * len), p2 = ridgeP.getPointAtLength(t * len + 26);
+    w1(ms, p1.x, p1.y, 0, .8); w2(ms, p2.x, p2.y, Math.PI * .55, .8);
+  }, 15000);
+})();
+
+/* ---------- G: Bei jedem Wetter (Jahreszeiten) ---------- */
+(function () {
+  const svg = document.getElementById('v7');
+  const rnd = seeded(41);
+  // Tannen (immer grün)
+  [[160, 214, 92], [330, 214, 70], [470, 214, 84], [640, 214, 100]].forEach(([x, b, h]) => firFilled(svg, x, b, h, C.lichtung, .14));
+  // Laubbäume: Stamm + Äste, Krone aus Kreisen
+  const crowns = [];
+  [[80, 120], [250, 100], [560, 112], [730, 126]].forEach(([x, h]) => {
+    const g = el('g', {}, svg), top = 214 - h;
+    el('path', { d: `M${x} 214 V${top + 30} M${x} ${top + 62} L${x - 22} ${top + 34} M${x} ${top + 48} L${x + 24} ${top + 22} M${x} ${top + 30} L${x - 8} ${top + 8}`, fill: 'none', stroke: C.papier, 'stroke-width': 2.2, 'stroke-linecap': 'round', opacity: .45 }, g);
+    const cg = el('g', {}, g);
+    [[0, 18, 30], [-24, 34, 22], [24, 30, 24], [-10, 4, 20], [14, 10, 20]].forEach(([dx, dy, r]) => el('circle', { cx: x + dx, cy: top + dy, r }, cg));
+    crowns.push(cg);
+  });
+  el('path', { d: 'M0 214 H800', stroke: C.lichtung, 'stroke-width': 1, opacity: .35 }, svg);
+  const w1 = walker(svg, C.papier), w2 = walker(svg, C.lichtung);
+  // Partikel
+  const rain = el('g', {}, svg), leaves = el('g', {}, svg), snow = el('g', {}, svg), P = [];
+  for (let i = 0; i < 45; i++) P.push({ e: el('line', { x1: 0, y1: 0, x2: -3, y2: 11, stroke: C.papier, 'stroke-width': 1.2, 'stroke-linecap': 'round', opacity: .5 }, rain), x: rnd() * 820, y: rnd() * 260, v: 260 + rnd() * 80, k: 'r' });
+  for (let i = 0; i < 26; i++) P.push({ e: el('ellipse', { rx: 3.6, ry: 1.7, fill: i % 3 ? '#D9A15B' : '#C98A45' }, leaves), x: rnd() * 800, y: rnd() * 260, v: 22 + rnd() * 18, k: 'l', ph: rnd() * 6 });
+  for (let i = 0; i < 60; i++) P.push({ e: el('circle', { r: 1.2 + rnd() * 1.2, fill: C.papier, opacity: .8 }, snow), x: rnd() * 800, y: rnd() * 260, v: 14 + rnd() * 16, k: 's', ph: rnd() * 6 });
+  const label = el('text', { x: 24, y: 38, fill: C.lichtung, 'font-family': 'Figtree, system-ui, sans-serif', 'font-size': 15, 'font-weight': 600, opacity: .8 }, svg);
+  const names = ['Frühling', 'Sommer', 'Herbst', 'Winter'];
+  const cols = [[201, 222, 143, .55], [157, 191, 110, .7], [217, 161, 91, .7], [217, 161, 91, 0]];
+  const smooth = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+  loop(ms => {
+    const s = (ms % 28000) / 28000 * 4, i = Math.floor(s), f = s - i, b = smooth(.78, 1, f), n = (i + 1) % 4;
+    const c = cols[i].map((v, k) => v + (cols[n][k] - v) * b);
+    crowns.forEach(cg => { cg.setAttribute('fill', `rgb(${c[0] | 0},${c[1] | 0},${c[2] | 0})`); cg.setAttribute('opacity', c[3].toFixed(2)); });
+    const wgt = [0, 0, 0, 0]; wgt[i] += 1 - b; wgt[n] += b;
+    rain.setAttribute('opacity', wgt[0]); leaves.setAttribute('opacity', wgt[2]); snow.setAttribute('opacity', wgt[3]);
+    label.textContent = names[b > .5 ? n : i];
+    label.setAttribute('opacity', (.8 * (1 - Math.sin(b * Math.PI))).toFixed(2));
+    const sec = ms / 1000;
+    P.forEach(p => {
+      const y = (p.y + p.v * sec) % 270 - 10;
+      if (p.k === 'r') { const x = (p.x - y * .27 + 820) % 820; p.e.setAttribute('transform', `translate(${x} ${y})`); }
+      else if (p.k === 'l') { const x = p.x + Math.sin(sec * 1.3 + p.ph) * 18; p.e.setAttribute('transform', `translate(${x} ${y}) rotate(${(sec * 90 + p.ph * 60) % 360})`); }
+      else { const x = p.x + Math.sin(sec * .8 + p.ph) * 8; p.e.setAttribute('transform', `translate(${x} ${y})`); }
+    });
+    w1(ms, 380, 214, 0, 1.35); w2(ms, 420, 214, Math.PI * .55, 1.35);
+  }, 17000);
+})();
+
+/* ---------- H: Drohnenblick unter den Baumkronen ---------- */
+(function () {
+  const svg = document.getElementById('v8');
+  const trail = el('path', { d: 'M-30 70 C140 80 210 210 400 186 S630 50 830 120', fill: 'none', stroke: C.lichtung, 'stroke-width': 34, 'stroke-linecap': 'round', opacity: .07 }, svg);
+  el('path', { d: 'M-30 70 C140 80 210 210 400 186 S630 50 830 120', fill: 'none', stroke: C.lichtung, 'stroke-width': 1, 'stroke-dasharray': '2 6', opacity: .25 }, svg);
+  function person(color) {
+    const g = el('g', {}, svg);
+    el('ellipse', { cx: 0, cy: 0, rx: 4.5, ry: 8, fill: color }, g);
+    el('circle', { cx: 0, cy: 0, r: 3.8, fill: color, stroke: C.tanne, 'stroke-width': 1.2 }, g);
+    return g;
+  }
+  const a = person(C.papier), b = person(C.lichtung);
+  // Kronen als unregelmäßige Ringe, über den Menschen gezeichnet
+  const rnd = seeded(53), crowns = [];
+  function blob(cx, cy, r, s) {
+    let d = '';
+    for (let i = 0; i <= 48; i++) {
+      const t = i / 48 * Math.PI * 2, rr = r + Math.sin(3 * t + s) * r * .07 + Math.sin(5 * t + s * 2) * r * .05;
+      d += (i ? 'L' : 'M') + (cx + Math.cos(t) * rr).toFixed(1) + ' ' + (cy + Math.sin(t) * rr).toFixed(1);
+    }
+    return d + 'Z';
+  }
+  const spots = [[60, 30, 34], [150, 150, 40], [250, 60, 30], [300, 230, 36], [330, 130, 26], [470, 230, 30], [520, 110, 34], [560, 30, 28], [640, 200, 40], [700, 70, 30], [770, 180, 32], [410, 40, 24], [90, 220, 30], [230, 190, 22], [600, 140, 22]];
+  spots.forEach(([cx, cy, r], i) => {
+    const g = el('g', {}, svg), s = rnd() * 6;
+    el('path', { d: blob(cx, cy, r, s), fill: C.lichtung, opacity: .1 }, g);
+    [1, .68, .38].forEach((k, j) => el('path', { d: blob(cx, cy, r * k, s + j), fill: 'none', stroke: C.lichtung, 'stroke-width': 1, opacity: .4 - j * .08 }, g));
+    el('circle', { cx, cy, r: 1.6, fill: C.lichtung, opacity: .5 }, g);
+    crowns.push([g, cx, cy, i]);
+  });
+  const len = trail.getTotalLength();
+  loop(ms => {
+    const t = (ms % 36000) / 36000, L = t * len;
+    const p = trail.getPointAtLength(L), q = trail.getPointAtLength(Math.min(len, L + 1));
+    const ang = Math.atan2(q.y - p.y, q.x - p.x), nx = -Math.sin(ang), ny = Math.cos(ang);
+    const sway = Math.sin(ms / 260) * 1.2;
+    a.setAttribute('transform', `translate(${p.x + nx * 9} ${p.y + ny * 9}) rotate(${ang * 180 / Math.PI + sway})`);
+    b.setAttribute('transform', `translate(${p.x - nx * 9} ${p.y - ny * 9}) rotate(${ang * 180 / Math.PI - sway})`);
+    crowns.forEach(([g, cx, cy, i]) => { const k = 1 + Math.sin(ms / 1800 + i) * .015; g.setAttribute('transform', `translate(${cx} ${cy}) scale(${k}) translate(${-cx} ${-cy})`); });
+  }, 9000);
 })();
 </script>
 </body>
