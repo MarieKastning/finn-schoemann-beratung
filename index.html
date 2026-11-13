@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finn Schömann – Psychologische Beratung</title>
+<meta name="description" content="Psychologische Beratung, Selbsterfahrung und Walk&Talk im Wald in Bad Essen. Finn Schömann, Psychologe.">
+<meta name="robots" content="noindex, nofollow"><!-- Prototyp: vor Livegang entfernen -->
+<meta property="og:title" content="Finn Schömann – Psychologische Beratung in Bad Essen">
+<meta property="og:description" content="Psychodynamische Beratung, Selbsterfahrung und Walk&Talk im Wald. Kostenfreies Erstgespräch.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#1E3B34">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231E3B34'/%3E%3Cg fill='none' stroke='%23DCE7A9' stroke-width='1.6'%3E%3Cellipse cx='16' cy='16.5' rx='4' ry='3.4'/%3E%3Cellipse cx='16.5' cy='16' rx='8.2' ry='7.2'/%3E%3Cellipse cx='16' cy='16.3' rx='12.4' ry='11'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Literata:ital,opsz,wght@0,7..72,300..600;1,7..72,300..500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --nebel: #EDF0EA;      /* Seitenhintergrund, kühles Morgengrau */
+    --papier: #F8FAF6;     /* helle Flächen */
+    --tanne: #1E3B34;      /* Text, Überschriften */
+    --moos: #4F6B4A;       /* Sekundärtext, Linien */
+    --linie: #C9D3C4;      /* feine Trenner */
+    --lichtung: #DCE7A9;   /* Akzentfläche */
+    --rinde: #7A5C45;      /* sparsamer Warmton */
+    --serif: "Literata", Georgia, serif;
+    --sans: "Figtree", system-ui, sans-serif;
+    --maxw: 68rem;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+  body {
+    margin: 0;
+    background: var(--nebel);
+    color: var(--tanne);
+    font-family: var(--serif);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    font-optical-sizing: auto;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--moos); outline-offset: 3px; border-radius: 2px; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 1.25rem; }
+
+  /* Prototyp-Hinweis */
+  .proto {
+    background: var(--tanne); color: var(--papier);
+    font-family: var(--sans); font-size: .85rem; text-align: center; padding: .4rem 1rem;
+  }
+  mark.todo {
+    background: #F3E3B5; color: var(--tanne); padding: 0 .2em; border-radius: 2px;
+    border-bottom: 1px dashed var(--rinde);
+  }
+
+  /* Navigation */
+  header.top {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--nebel) 92%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--linie);
+  }
+  header.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 4rem; }
+  .brand { font-family: var(--serif); font-weight: 500; font-size: 1.1rem; text-decoration: none; }
+  .brand small { display: block; font-family: var(--sans); font-size: .78rem; color: var(--moos); font-weight: 400; line-height: 1.2; }
+  nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 1.4rem; }
+  nav a { font-family: var(--sans); font-size: .92rem; text-decoration: none; padding: .3rem 0; border-bottom: 1px solid transparent; }
+  nav a:hover { border-bottom-color: var(--moos); }
+  .menu-toggle { display: none; }
+
+  /* Hero */
+  .hero { position: relative; overflow: hidden; padding: 5.5rem 0 4rem; }
+  .hero svg.rings { position: absolute; right: -14rem; top: -6rem; width: 52rem; height: 52rem; pointer-events: none; }
+  .rings path { fill: none; stroke: var(--moos); stroke-width: 1; opacity: .28; }
+  .hero .wrap { position: relative; }
+  .quote {
+    font-family: var(--serif); font-weight: 300; font-style: italic;
+    font-size: clamp(2.1rem, 5.4vw, 4rem); line-height: 1.12; letter-spacing: -.01em;
+    max-width: 15ch; margin: 0 0 .6rem; font-variation-settings: "opsz" 72;
+  }
+  .quote-src { font-family: var(--sans); color: var(--moos); font-size: .95rem; margin: 0 0 3rem; }
+  .intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3rem; align-items: start; }
+  .intro h1 { font-size: 1.5rem; font-weight: 500; margin: 0 0 .8rem; line-height: 1.3; }
+  .intro p { margin: 0 0 1rem; max-width: 34rem; }
+  .topics { margin: 0; padding: 1.4rem 1.6rem; list-style: none; background: var(--papier); border-left: 3px solid var(--lichtung); }
+  .topics li { padding: .35rem 0; border-bottom: 1px solid var(--linie); }
+  .topics li:last-child { border-bottom: 0; }
+  .topics-label { font-family: var(--sans); font-size: .9rem; color: var(--moos); margin: 0 0 .4rem; }
+  .cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.4rem; margin-top: 2.2rem; }
+  .btn {
+    display: inline-block; font-family: var(--sans); font-weight: 600; font-size: 1rem;
+    background: var(--tanne); color: var(--papier); text-decoration: none;
+    padding: .85rem 1.5rem; border-radius: 999px;
+  }
+  .btn:hover { background: var(--moos); }
+  .avail { font-family: var(--sans); font-size: .95rem; display: inline-flex; align-items: center; gap: .55rem; }
+  .avail::before { content: ""; width: .6rem; height: .6rem; border-radius: 50%; background: #7FA35A; box-shadow: 0 0 0 4px var(--lichtung); }
+  .note { font-size: .92rem; font-style: italic; color: var(--moos); max-width: 46rem; margin-top: 2.5rem; }
+
+  /* Sektionen */
+  section.block { padding: 4.5rem 0; border-top: 1px solid var(--linie); }
+  h2 { font-size: clamp(1.7rem, 3.4vw, 2.3rem); font-weight: 400; line-height: 1.2; margin: 0 0 2.2rem; font-variation-settings: "opsz" 60; }
+  h3 { font-size: 1.3rem; font-weight: 500; line-height: 1.3; margin: 0 0 .8rem; }
+  p { margin: 0 0 1rem; }
+  .measure { max-width: 40rem; }
+
+  /* Angebote */
+  .offer { display: grid; grid-template-columns: 16rem minmax(0, 1fr); gap: 2.5rem; padding: 2.4rem 0; border-top: 1px solid var(--linie); }
+  .offer:first-of-type { border-top: 0; padding-top: 0; }
+  .offer-head h3 { margin: 0; }
+  .tag { display: inline-block; margin-top: .6rem; font-family: var(--sans); font-size: .8rem; font-weight: 600; background: var(--lichtung); padding: .15rem .6rem; border-radius: 999px; }
+  .offer-body { max-width: 40rem; }
+  .offer-body ul { padding-left: 1.2rem; margin: 0 0 1rem; }
+  .offer-body li { margin-bottom: .3rem; }
+  .question { font-style: italic; border-left: 2px solid var(--moos); padding-left: 1rem; }
+  .fit { font-style: italic; color: var(--moos); }
+  .offer.wald { background: var(--tanne); color: var(--papier); margin: 1rem -1.25rem 0; padding: 2.4rem 1.25rem; border-top: 0; border-radius: 4px; }
+  .offer.wald .tag { color: var(--tanne); }
+  .offer.wald .fit { color: var(--lichtung); }
+
+  /* Person */
+  .person { display: grid; grid-template-columns: 18rem minmax(0, 1fr); gap: 3rem; align-items: start; }
+  .portrait {
+    aspect-ratio: 4 / 5; background: var(--papier); border: 1px dashed var(--moos);
+    display: grid; place-items: center; text-align: center; font-family: var(--sans); font-size: .9rem; color: var(--moos); padding: 1rem;
+  }
+  .member { font-family: var(--sans); font-size: .95rem; color: var(--moos); margin-top: 1.5rem; }
+
+  /* Ablauf & Kosten */
+  .two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3.5rem; }
+  ol.steps { list-style: none; counter-reset: s; margin: 0; padding: 0; }
+  ol.steps li { counter-increment: s; position: relative; padding: 0 0 1.6rem 3.4rem; }
+  ol.steps li::before {
+    content: counter(s); position: absolute; left: 0; top: -.1rem;
+    width: 2.2rem; height: 2.2rem; border-radius: 50%; border: 1px solid var(--moos);
+    display: grid; place-items: center; font-family: var(--sans); font-size: .95rem;
+  }
+  ol.steps li:not(:last-child)::after { content: ""; position: absolute; left: 1.1rem; top: 2.3rem; bottom: .2rem; border-left: 1px solid var(--linie); }
+  .price { display: flex; justify-content: space-between; gap: 1rem; padding: .9rem 0; border-bottom: 1px solid var(--linie); }
+  .price span:last-child { font-family: var(--sans); font-weight: 600; white-space: nowrap; }
+  .price small { display: block; font-family: var(--sans); color: var(--moos); font-size: .85rem; }
+
+  /* FAQ */
+  details.faq { border-bottom: 1px solid var(--linie); max-width: 46rem; }
+  details.faq summary {
+    cursor: pointer; list-style: none; padding: 1.1rem 2.5rem 1.1rem 0; position: relative;
+    font-weight: 500; font-size: 1.1rem;
+  }
+  details.faq summary::-webkit-details-marker { display: none; }
+  details.faq summary::after {
+    content: "+"; position: absolute; right: .3rem; top: .9rem; font-family: var(--sans); font-size: 1.4rem; color: var(--moos);
+    transition: transform .2s ease;
+  }
+  details.faq[open] summary::after { transform: rotate(45deg); }
+  details.faq p { padding-bottom: 1rem; }
+
+  /* Kontakt */
+  .contact { background: var(--lichtung); }
+  .contact-links { display: flex; flex-wrap: wrap; gap: 1rem 3rem; margin-top: 1.5rem; }
+  .contact-links a { font-size: clamp(1.25rem, 2.6vw, 1.7rem); text-decoration-thickness: 1px; text-underline-offset: .25em; }
+  .contact-links span { display: block; font-family: var(--sans); font-size: .85rem; color: var(--moos); }
+
+  /* Footer / Impressum */
+  footer { background: var(--tanne); color: var(--papier); padding: 3.5rem 0 2.5rem; font-size: .95rem; }
+  footer h2 { color: var(--papier); font-size: 1.5rem; margin-bottom: 1.5rem; }
+  footer h3 { font-family: var(--sans); font-size: .95rem; font-weight: 600; margin: 1.2rem 0 .2rem; }
+  footer p { margin: 0; max-width: 40rem; }
+  .imp { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 3rem; }
+  .copy { margin-top: 2.5rem; padding-top: 1.2rem; border-top: 1px solid rgba(248,250,246,.2); font-family: var(--sans); font-size: .85rem; opacity: .8; }
+
+  /* Verschönerungen Runde 2 */
+  .quote { text-indent: -.42em; }                 /* hängendes „ */
+  .place { font-family: var(--sans); font-size: .95rem; color: var(--moos); margin: 0 0 1.4rem; }
+  nav a[aria-current="true"] { border-bottom-color: var(--tanne); font-weight: 600; }
+
+  .teasers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.6rem; margin-top: 3.5rem; }
+  .teaser { text-decoration: none; display: block; padding-top: 1rem; border-top: 2px solid var(--moos); }
+  .teaser strong { display: block; font-weight: 500; font-size: 1.15rem; line-height: 1.3; margin-bottom: .35rem; }
+  .teaser span { display: block; font-size: .95rem; color: var(--moos); line-height: 1.5; }
+  .teaser em { display: inline-block; margin-top: .7rem; font-style: normal; font-family: var(--sans); font-size: .9rem; font-weight: 600; text-decoration: underline; text-underline-offset: .25em; text-decoration-color: var(--linie); }
+  .teaser:hover em { text-decoration-color: var(--tanne); }
+  .teaser.wald-t { border-top-color: var(--tanne); }
+  .teaser span.new { display: inline-block; color: var(--tanne); line-height: 1.4; font-family: var(--sans); font-size: .75rem; font-weight: 600; background: var(--lichtung); padding: .05rem .5rem; border-radius: 999px; margin-left: .4rem; vertical-align: .15em; }
+
+  .offer.wald { position: relative; overflow: hidden; }
+  .offer.wald > div { position: relative; }
+  .offer.wald svg.rings-static { position: absolute; left: -9rem; bottom: -13rem; width: 30rem; height: 30rem; pointer-events: none; }
+  .rings-static path { fill: none; stroke: var(--lichtung); stroke-width: 1; opacity: .16; }
+
+  .first-talk { font-family: var(--sans); font-weight: 600; display: inline-block; background: var(--papier); padding: .3rem .8rem; border-radius: 999px; margin-bottom: 1rem; }
+  .crisis { margin-top: 2.8rem; padding: 1.2rem 1.4rem; background: var(--papier); border-left: 3px solid var(--rinde); max-width: 44rem; font-size: .97rem; }
+  .crisis strong { display: block; margin-bottom: .2rem; }
+  .crisis a { white-space: nowrap; font-weight: 600; }
+
+  .mobilebar { display: none; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    details.faq[open] > p { animation: reveal .25s ease-out; }
+    @keyframes reveal { from { opacity: 0; transform: translateY(-4px); } }
+  }
+
+  /* Mobil */
+  @media (max-width: 860px) {
+    .teasers { grid-template-columns: minmax(0, 1fr); gap: 1.2rem; margin-top: 2.5rem; }
+    .mobilebar {
+      display: grid; grid-template-columns: 1fr 1fr; gap: .6rem;
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+      padding: .6rem 1rem calc(.6rem + env(safe-area-inset-bottom));
+      background: color-mix(in srgb, var(--nebel) 94%, transparent); backdrop-filter: blur(8px);
+      border-top: 1px solid var(--linie);
+    }
+    .mobilebar a { text-align: center; font-family: var(--sans); font-weight: 600; text-decoration: none; padding: .7rem; border-radius: 999px; border: 1px solid var(--tanne); }
+    .mobilebar a:first-child { background: var(--tanne); color: var(--papier); }
+    body { padding-bottom: 4.5rem; }
+    nav ul { display: none; }
+    .menu-toggle { display: block; position: relative; }
+    .menu-toggle summary { list-style: none; cursor: pointer; font-family: var(--sans); font-size: .95rem; border: 1px solid var(--moos); border-radius: 999px; padding: .35rem .9rem; }
+    .menu-toggle summary::-webkit-details-marker { display: none; }
+    .menu-toggle ul { display: block; position: absolute; right: 0; top: 2.6rem; background: var(--papier); border: 1px solid var(--linie); padding: .6rem 1.2rem; min-width: 13rem; list-style: none; margin: 0; }
+    .menu-toggle li a { display: block; padding: .5rem 0; font-family: var(--sans); text-decoration: none; }
+    .intro, .two, .person, .offer, .imp { grid-template-columns: minmax(0, 1fr); gap: 1.6rem; }
+    .portrait { max-width: 14rem; }
+    .hero { padding-top: 3.5rem; }
+    .hero svg.rings { right: -22rem; top: -10rem; }
+    section.block { padding: 3.5rem 0; }
+  }
+
+  /* Einzige Animation: Höhenlinien zeichnen sich beim Laden */
+  @media (prefers-reduced-motion: no-preference) {
+    .rings path { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: draw 2.6s cubic-bezier(.4,0,.2,1) forwards; animation-delay: var(--d); }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+  }
+</style>
+</head>
+<body>
+
+<div class="proto">Prototyp, Stand 13.11.2026. Gelb markierte Stellen sind noch offen.</div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#start">Finn Schömann<small>Psychologische Beratung</small></a>
+    <nav aria-label="Hauptnavigation">
+      <ul>
+        <li><a href="#angebote">Angebote</a></li>
+        <li><a href="#person">Zu meiner Person</a></li>
+        <li><a href="#ablauf">Ablauf &amp; Kosten</a></li>
+        <li><a href="#fragen">Häufige Fragen</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </ul>
+      <details class="menu-toggle">
+        <summary>Menü</summary>
+        <ul>
+          <li><a href="#angebote">Angebote</a></li>
+          <li><a href="#person">Zu meiner Person</a></li>
+          <li><a href="#ablauf">Ablauf &amp; Kosten</a></li>
+          <li><a href="#fragen">Häufige Fragen</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="start">
+    <svg class="rings" viewBox="-400 -400 800 800" aria-hidden="true"></svg>
+    <div class="wrap">
+      <p class="quote">„Das menschliche Seelenleben ist kein Sein, sondern ein Werden.“</p>
+      <p class="quote-src">Alfred Adler</p>
+
+      <div class="intro">
+        <div>
+          <p class="place">Psychologische Beratung in Bad Essen</p>
+          <h1>Herzlich willkommen!</h1>
+          <p>Als Psychologe und Psychologischer Psychotherapeut in Ausbildung unter Supervision (tiefenpsychologisch-fundiert) biete ich Psychologische Beratung an. Ich begleite Sie in Ihrer persönlichen Lebenssituation.</p>
+          <div class="cta-row">
+            <a class="btn" href="#kontakt">Kostenfreies Erstgespräch anfragen</a>
+            <span class="avail">Aktuell freie Plätze für Psychologische Beratung</span>
+          </div>
+        </div>
+        <div>
+          <p class="topics-label">Zum Beispiel bei</p>
+          <ul class="topics">
+            <li>zwischenmenschlichen Kommunikationsproblemen und Beziehungskonflikten</li>
+            <li>belastenden Lebensereignissen, Abschied und Trauer</li>
+            <li>Erschöpfung und Work-Life-Balance-Problemen</li>
+            <li>beruflicher Orientierung und beruflichen Konflikten</li>
+            <li>Veränderungen des Lebensstils</li>
+            <li>Sinnfragen</li>
+            <li>Fragen des Selbstwerts</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="teasers" aria-label="Angebote auf einen Blick">
+        <a class="teaser" href="#beratung"><strong>Psychodynamische Beratung</strong><span>für Schwellensituationen und kritische Lebensphasen</span><em>Mehr erfahren</em></a>
+        <a class="teaser" href="#selbsterfahrung"><strong>Persönlichkeitsentwicklung &amp; Selbsterfahrung</strong><span>sich weiterentwickeln, auch ohne Krise</span><em>Mehr erfahren</em></a>
+        <a class="teaser wald-t" href="#wald"><strong>Bewegen und Sprechen im Wald<span class="new">neu</span></strong><span>Walk&amp;Talk, wenn es im Sitzen schwerfällt</span><em>Mehr erfahren</em></a>
+      </div>
+
+      <p class="note">Hinweis: Meine Beratung ist keine Psychotherapie und ersetzt keine Behandlung psychischer Erkrankungen. Wenn eine psychische Erkrankung mit Krankheitswert vorliegt, ist eine psychotherapeutische Behandlung erforderlich.</p>
+    </div>
+  </section>
+
+  <section class="block" id="angebote">
+    <div class="wrap">
+      <h2>Angebote</h2>
+
+      <article class="offer" id="beratung">
+        <div class="offer-head"><h3>Psychodynamische Beratung</h3></div>
+        <div class="offer-body">
+          <p>Mein Angebot richtet sich an Menschen in Schwellensituationen und kritischen Lebensphasen, etwa bei beruflichen Umbrüchen, Beziehungskrisen, Trauer, Selbstzweifeln oder dem Gefühl, dass es so nicht weitergeht.</p>
+          <p>Psychodynamische Beratung ist für mich eine Form der zwischenmenschlichen Begegnung. Grundlage ist eine vertrauensvolle Zusammenarbeit, in der bisher ungelöste Konflikte und Reifungshindernisse bewältigt und neue Perspektiven erschlossen werden können.</p>
+          <p>Die Beratung kann ein Raum sein, in dem Sie sortieren dürfen, was gerade schwierig ist. Es geht nicht darum, Sie zu analysieren oder Ihnen fertige Antworten zu geben. Ich begleite Sie dabei, Ihre eigenen Gefühle, Bedürfnisse und wiederkehrenden Muster zu verstehen und zu verändern.</p>
+        </div>
+      </article>
+
+      <article class="offer" id="selbsterfahrung">
+        <div class="offer-head"><h3>Persönlichkeits&shy;entwicklung &amp; Selbsterfahrung</h3></div>
+        <div class="offer-body">
+          <p>Nicht jede Auseinandersetzung mit sich selbst entsteht aus einer Krise. Viele Menschen wünschen sich einen geschützten Raum, um sich weiterzuentwickeln, sich anders zu verstehen, ihren Lebensstil bewusster zu gestalten oder in engerem Kontakt mit den eigenen Gefühlen und Bedürfnissen zu leben.</p>
+          <p class="question">Im Zentrum steht die Frage: Welche leitenden Überzeugungen, welche früh erworbenen Strategien und welches Bild von mir selbst, den anderen und der Welt bestimmen mein Erleben und Handeln? Und wo möchte ich bewusster gestalten und neue Wege gehen, statt nur zu wiederholen?</p>
+          <p>Dieser Prozess kann Ihnen helfen,</p>
+          <ul>
+            <li>mehr Klarheit bei aktuellen, vergangenen und zukünftigen Entscheidungen zu entwickeln,</li>
+            <li>eigene Verhaltens- und Beziehungsmuster zu erkennen und zu verstehen, woher sie kommen,</li>
+            <li>einen bewussteren, mitfühlenderen Umgang mit sich selbst zu entwickeln,</li>
+            <li>Ihre Beziehungsfähigkeit und Ihren Bezug zu Gruppen zu verändern,</li>
+            <li>persönliche Ziele, Werte und Ihren „roten Faden“ anders zu betrachten,</li>
+            <li>mehr Übereinstimmung zwischen Ihrem inneren Erleben und Ihrem Leben nach außen herzustellen.</li>
+          </ul>
+          <p class="fit">Geeignet für Menschen, die sich vertieft mit sich selbst auseinandersetzen möchten, sowie ergänzend für Personen in helfenden, beratenden oder führenden Berufen, für die Selbstreflexion Teil der professionellen Entwicklung ist.</p>
+        </div>
+      </article>
+
+      <article class="offer wald" id="wald">
+        <svg class="rings-static" viewBox="-400 -400 800 800" aria-hidden="true"></svg>
+        <div class="offer-head">
+          <h3>Bewegen und Sprechen im Wald (Walk&amp;Talk)</h3>
+          <span class="tag">neu</span>
+        </div>
+        <div class="offer-body">
+          <p>Seelische und körperliche Entwicklung braucht Bewegung. Bei gemeinsamer Bewegung in der Natur verändert sich die Perspektive auf sich selbst, andere und die Umwelt.</p>
+          <p>Der Wald bietet dafür einen natürlichen Rahmen und hat einen förderlichen Effekt. Die Natur dient dabei auch als Resonanzraum und Themen können anders betrachtet werden.</p>
+          <p><strong>Geeignet für</strong> Menschen, die</p>
+          <ul>
+            <li>sich im Sitzen schwer öffnen oder „im Kopf festhängen“,</li>
+            <li>Erschöpfung und Anspannung spüren und Bewegung als wohltuend erleben,</li>
+            <li>in Übergangsphasen stecken und Raum zum Nachdenken brauchen,</li>
+            <li>Selbsterfahrung und Persönlichkeitsentwicklung mit Naturerleben verbinden möchten.</li>
+          </ul>
+          <p class="fit">Auch dieses Angebot ist Beratung und keine Psychotherapie.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="block" id="person">
+    <div class="wrap">
+      <h2>Zu meiner Person</h2>
+      <div class="person">
+        <div class="portrait">Platz für ein Foto von Finn</div>
+        <div class="measure">
+          <p>Mein Name ist Finn Schömann. Ich bin Psychologe und arbeite im Bereich der Psychosomatik als Psychologischer Psychotherapeut in Ausbildung unter Supervision (tiefenpsychologisch-fundiert). Parallel zu meiner selbstständigen Tätigkeit arbeite ich in einer psychosomatischen Klinik und bringe Erfahrung aus dem Bereich der Psychosomatik mit.</p>
+          <p><strong>Meine Haltung</strong> ist ganzheitlich, humanistisch und individuell. Ich begleite Menschen vor dem Hintergrund ihrer Lebensgeschichte, ihrer Träume und Ziele.</p>
+          <p>Ich gehe davon aus, dass der Mensch immer als Ganzes und im Kontext seiner Beziehungen zu verstehen ist. Wir streben nach Zugehörigkeit, nach Bedeutsamkeit und danach, unser Leben sinnvoll zu gestalten. Gleichzeitig sind wir in Gemeinschaft, Arbeit und Beziehungen eingebunden. Mir geht es darum, Menschen dabei zu begleiten, mehr in Beziehung mit sich selbst zu kommen, mit den eigenen Gefühlen, Bedürfnissen und Mustern, und zugleich ihren Platz in ihrem Leben und Beziehungen neu oder klarer zu finden.</p>
+          <p class="member">Mitglied im Verband der DGIP (Deutsche Gesellschaft für Individualpsychologie e.V.)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="ablauf">
+    <div class="wrap">
+      <h2>Ablauf &amp; Kosten</h2>
+      <div class="two">
+        <div>
+          <h3>Ablauf</h3>
+          <ol class="steps">
+            <li><strong>Kontaktaufnahme:</strong> telefonisch oder per E-Mail (gerne kurz Anliegen nennen)</li>
+            <li><strong>Kennenlernen:</strong> Erstgespräch, um Ihr Anliegen und das weitere Vorgehen gemeinsam herauszufinden (kostenfrei)</li>
+            <li><strong>Termine</strong> nach Absprache, <mark class="todo">online, im Beratungsraum vor Ort oder beim Bewegen und Sprechen im Wald</mark>.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Kosten</h3>
+          <div class="price"><span>Einzelberatung<small>50 bis 60 Minuten</small></span><span>70 € pro Sitzung</span></div>
+          <div class="price"><span>Selbsterfahrung<small>50 bis 60 Minuten</small></span><span>70 € pro Sitzung</span></div>
+          <p style="margin-top:1.2rem">Einkommensabhängige Sonderregelungen sind möglich. Sprechen Sie mich dafür einfach an.</p>
+          <p>Bitte beachten Sie, dass Sie bei mir Selbstzahler sind.</p>
+          <p class="note" style="margin-top:.5rem">Hinweis: Meine Beratung ist keine Psychotherapie und ersetzt keine Behandlung psychischer Erkrankungen. Wenn eine psychische Erkrankung mit Krankheitswert vorliegt, ist eine psychotherapeutische Behandlung erforderlich.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="fragen">
+    <div class="wrap">
+      <h2>Häufige Fragen</h2>
+      <details class="faq">
+        <summary>Was ist der Unterschied zwischen Psychologischer Beratung und Psychotherapie?</summary>
+        <p>Psychologische Beratung unterstützt bei konkreten Lebensfragen, Krisen oder Entscheidungen, meist zeitlich begrenzt und lösungsorientiert. Psychotherapie behandelt diagnostizierte psychische Erkrankungen (z. B. Depression, Angststörung) auf Basis eines anerkannten Verfahrens und darf nur von approbierten Therapeut:innen durchgeführt werden. Beratung ersetzt keine Therapie, kann sie aber sinnvoll ergänzen.</p>
+      </details>
+      <details class="faq">
+        <summary>Kann Beratung helfen, während ich einen Therapieplatz suche? Kann sie ein Überbrückungsangebot sein?</summary>
+        <p>Ja. Beratung kann in dieser Zeit stabilisieren, erste Orientierung geben und akute Belastungen abfedern, bis ein Therapieplatz gefunden ist.</p>
+      </details>
+      <details class="faq">
+        <summary>Wie finde ich einen Therapieplatz?</summary>
+        <p><mark class="todo">Antwort ergänzen, z. B. Hinweis auf die Terminservicestelle der Kassenärztlichen Vereinigung unter 116 117 und das Psychotherapeutenverzeichnis.</mark></p>
+      </details>
+      <details class="faq">
+        <summary>Wie läuft eine Sitzung ab und wie lange dauert sie?</summary>
+        <p>Eine Sitzung findet im persönlichen Gespräch statt (<mark class="todo">online / vor Ort / im Wald</mark>) und dauert in der Regel 50 bis 60 Minuten. Vorab führen wir ein Erstgespräch.</p>
+      </details>
+      <details class="faq">
+        <summary>Wie viel kostet eine Sitzung?</summary>
+        <p>Im Regelfall 70 €. Einkommensabhängige Sonderregelungen sind möglich.</p>
+      </details>
+      <details class="faq">
+        <summary>Eignet sich das Gehen im Wald auch bei schlechtem Wetter?</summary>
+        <p>Leichter Regen ist meist kein Problem. Bei extremem Wetter finden wir gemeinsam eine Alternative.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="block contact" id="kontakt">
+    <div class="wrap">
+      <h2>Kontakt</h2>
+      <p class="first-talk">Das Erstgespräch ist kostenfrei.</p>
+      <p>Termine sind nach Absprache möglich.</p>
+      <div class="contact-links">
+        <a href="tel:+49157352777343"><span>Mobil</span>0157 352 777 343</a>
+        <a href="mailto:finn.schoemann@live.de?subject=Anfrage%20Erstgespr%C3%A4ch"><span>E-Mail</span>finn.schoemann@live.de</a>
+      </div>
+      <div class="crisis" role="note">
+        <strong>In einer akuten Krise?</strong>
+        Bitte warten Sie nicht auf einen Termin. Die TelefonSeelsorge ist rund um die Uhr kostenfrei erreichbar unter <a href="tel:08001110111">0800 111 0 111</a> und <a href="tel:08001110222">0800 111 0 222</a>. Im Notfall wählen Sie den <a href="tel:112">Notruf 112</a>.
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="impressum">
+  <div class="wrap">
+    <h2>Impressum</h2>
+    <div class="imp">
+      <div>
+        <h3>Angaben gemäß § 5 DDG</h3>
+        <p>Finn Schömann<br>Lindenstraße 28 C<br>49152 Bad Essen, Deutschland</p>
+        <h3>Kontakt</h3>
+        <p>Telefon: 0157 352 777 343<br>E-Mail: finn.schoemann@live.de</p>
+        <h3>Berufsbezeichnung</h3>
+        <p>Psychologe. Finn Schömann ist Psychologe und in Ausbildung zum Psychologischen Psychotherapeuten (tiefenpsychologisch-fundierte Psychotherapie). Eine Approbation als Psychologischer Psychotherapeut liegt nicht vor.</p>
+      </div>
+      <div>
+        <h3>Mitgliedschaft</h3>
+        <p>Mitglied im Verband der DGIP (Deutsche Gesellschaft für Individualpsychologie e.V.)</p>
+        <h3>Hinweis zur Beratung</h3>
+        <p>Die auf dieser Website angebotene Psychologische Beratung ist keine Psychotherapie und ersetzt keine Diagnostik oder Behandlung psychischer Erkrankungen.</p>
+        <h3>Verbraucherstreitbeilegung</h3>
+        <p>Ich bin nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+        <h3>Datenschutz</h3>
+        <p><mark class="todo">Datenschutzerklärung fehlt noch</mark></p>
+      </div>
+    </div>
+    <p class="copy">© 2026 Finn Schömann, Psychologische Beratung in Bad Essen</p>
+  </div>
+</footer>
+
+<div class="mobilebar">
+  <a href="tel:+49157352777343">Anrufen</a>
+  <a href="mailto:finn.schoemann@live.de?subject=Anfrage%20Erstgespr%C3%A4ch">E-Mail</a>
+</div>
+
+<script>
+  // Mobilmenü nach Klick auf einen Link schließen
+  document.querySelectorAll('.menu-toggle a').forEach(a =>
+    a.addEventListener('click', () => a.closest('details').open = false));
+
+  // Aktiven Menüpunkt beim Scrollen markieren
+  const navLinks = [...document.querySelectorAll('nav ul:first-of-type a')];
+  const spy = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      navLinks.forEach(a => a.setAttribute('aria-current', a.getAttribute('href') === '#' + e.target.id ? 'true' : 'false'));
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  document.querySelectorAll('main > section[id]').forEach(s => spy.observe(s));
+
+  // Höhenlinien / Jahresringe: unregelmäßige, konzentrische Kurven
+  function drawRings(svg, count, animate, seed) {
+    const NS = 'http://www.w3.org/2000/svg';
+    const waves = [[3, 0.9 + seed, 7], [5, 2.1 + seed, 4], [2, 4.0 + seed, 9]]; // Frequenz, Phase, Amplitude
+    for (let k = 0; k < count; k++) {
+      const base = 30 + k * 26;
+      let d = '';
+      for (let i = 0; i <= 180; i++) {
+        const t = (i / 180) * Math.PI * 2;
+        let r = base;
+        waves.forEach(([f, p, a]) => { r += Math.sin(f * t + p + k * 0.12) * a * (1 + k * 0.18); });
+        const x = Math.cos(t) * r, y = Math.sin(t) * r * 0.92;
+        d += (i ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1);
+      }
+      const path = document.createElementNS(NS, 'path');
+      path.setAttribute('d', d + 'Z');
+      svg.appendChild(path);
+      if (animate) {
+        const len = Math.ceil(path.getTotalLength());
+        path.style.setProperty('--len', len);
+        path.style.setProperty('--d', (k * 0.09) + 's');
+      }
+    }
+  }
+  drawRings(document.querySelector('svg.rings'), 14, true, 0);
+  drawRings(document.querySelector('svg.rings-static'), 12, false, 1.7);
+</script>
+</body>
+</html>
